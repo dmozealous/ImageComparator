@@ -10,13 +10,29 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+/**
+ * The Class ImageComparator.
+ */
 public class ImageComparator {
 	
+	/** The img1. */
 	BufferedImage img1 = null;
+	
+	/** The img2. */
 	BufferedImage img2 = null;
+	
+	/** The diff count. */
 	int diffCount = 0;
+	
+	/** The list of pixels that differ between images. */
 	List<Pixel> pixels;
 	
+	/**
+	 * Instantiates a new image comparator.
+	 *
+	 * @param img1 the img1
+	 * @param img2 the img2
+	 */
 	public ImageComparator(BufferedImage img1, BufferedImage img2){
 		this.img1 = img1;
 		this.img2 = img2;
@@ -24,6 +40,11 @@ public class ImageComparator {
 		pixels = new ArrayList<Pixel>();
 	}
 
+	/**
+	 * Gets the number of pixels that are different between the two images.
+	 *
+	 * @return the pixel diff count
+	 */
 	public int getPixelDiffCount() {
 		
 		if(diffCount != 0){
@@ -47,14 +68,29 @@ public class ImageComparator {
 		return diffCount;
 	}
 
+	/**
+	 * Gets the difference between the width of the images
+	 *
+	 * @return the width diff
+	 */
 	public int getWidthDiff() {
 		return img1.getWidth() - img2.getWidth();
 	}
 
+	/**
+	 * Gets the difference between the height of the images.
+	 *
+	 * @return the height diff
+	 */
 	public int getHeightDiff() {
 		return img1.getHeight() - img2.getHeight();
 	}
 	
+	/**
+	 * Creates a composite image of the two images.
+	 *
+	 * @return the buffered image
+	 */
 	public BufferedImage createCompositeImage(){
 		
 		if(getPixelDiffCount() == 0){
@@ -81,6 +117,11 @@ public class ImageComparator {
 		
 	}
 
+	/**
+	 * Gets the pixel diff percent.
+	 *
+	 * @return the pixel diff percent
+	 */
 	public int getPixelDiffPercent() {
 		
 		int dimension = img1.getHeight() * img1.getWidth();
