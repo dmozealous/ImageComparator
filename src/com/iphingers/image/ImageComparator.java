@@ -30,6 +30,7 @@ public class ImageComparator {
 	/** The list of pixels that differ between images. */
 	List<Pixel> pixels;
 	
+	/** The new rect. */
 	Rectangle newRect;
 	
 	/**
@@ -48,6 +49,13 @@ public class ImageComparator {
 		newRect = createCompositeRectangle(img1,img2);
 	}
 	
+	/**
+	 * Creates the composite rectangle.
+	 *
+	 * @param img1 the img1
+	 * @param img2 the img2
+	 * @return the rectangle
+	 */
 	private Rectangle createCompositeRectangle(BufferedImage img1, BufferedImage img2){
 		
 		int xMax;
@@ -90,7 +98,7 @@ public class ImageComparator {
 	}
 
 	/**
-	 * Gets the difference between the width of the images
+	 * Gets the difference between the width of the images.
 	 *
 	 * @return the width diff
 	 */
@@ -110,6 +118,7 @@ public class ImageComparator {
 	/**
 	 * Creates a composite image of the two images.
 	 *
+	 * @param outputFile the output file
 	 * @return the buffered image
 	 */
 	public BufferedImage createCompositeImage(File outputFile){
