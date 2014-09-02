@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,19 +17,19 @@ import javax.imageio.ImageIO;
 public class ImageComparator {
 	
 	/** The img1. */
-	BufferedImage img1 = null;
+	private BufferedImage img1 = null;
 	
 	/** The img2. */
-	BufferedImage img2 = null;
+	private BufferedImage img2 = null;
 	
 	/** The diff count. */
-	int diffCount = 0;
+	private int diffCount = 0;
 	
 	/** The list of pixels that differ between images. */
-	List<Pixel> pixels;
+	private List<Pixel> pixels;
 	
 	/** The new rect. */
-	Rectangle newRect;
+	private Rectangle newRect;
 	
 	/**
 	 * Instantiates a new image comparator.
@@ -39,14 +37,14 @@ public class ImageComparator {
 	 * @param img1 the img1
 	 * @param img2 the img2
 	 */
-	public ImageComparator(BufferedImage img1, BufferedImage img2){
+	public ImageComparator(BufferedImage img1, BufferedImage img2) {
 		
 		this.img1 = img1;
 		this.img2 = img2;
 		
 		pixels = new ArrayList<Pixel>();
 		
-		newRect = createCompositeRectangle(img1,img2);
+		newRect = createCompositeRectangle(img1, img2);
 	}
 	
 	/**
@@ -56,7 +54,7 @@ public class ImageComparator {
 	 * @param img2 the img2
 	 * @return the rectangle
 	 */
-	private Rectangle createCompositeRectangle(BufferedImage img1, BufferedImage img2){
+	private Rectangle createCompositeRectangle(BufferedImage img1, BufferedImage img2) {
 		
 		int xMax;
 		int yMax;
@@ -64,7 +62,7 @@ public class ImageComparator {
 		xMax = Math.max(img1.getWidth(), img2.getWidth());
 		yMax = Math.max(img1.getHeight(), img2.getHeight());
 		
-		return new Rectangle(xMax,yMax);
+		return new Rectangle(xMax, yMax);
 	}
 
 	/**
@@ -74,16 +72,16 @@ public class ImageComparator {
 	 */
 	public int getPixelDiffCount() {
 		
-		if(diffCount != 0){
+		if (diffCount != 0) {
 			return diffCount;
 		}
 		
-		for(int y = 0; y < img1.getHeight() && y < img2.getHeight(); y++){
+		for (int y = 0; y < img1.getHeight() && y < img2.getHeight(); y++) {
 			
-			for(int x = 0; x < img1.getWidth() && x < img2.getWidth(); x++){
+			for (int x = 0; x < img1.getWidth() && x < img2.getWidth(); x++) {
 				
-					if(img1.getRGB(x, y) != img2.getRGB(x, y)){
-						Pixel pixel = new Pixel(x,y);
+					if (img1.getRGB(x, y) != img2.getRGB(x, y)) {
+						Pixel pixel = new Pixel(x, y);
 						pixels.add(pixel);
 						diffCount++;
 					}
@@ -121,25 +119,27 @@ public class ImageComparator {
 	 * @param outputFile the output file
 	 * @return the buffered image
 	 */
-	public BufferedImage createCompositeImage(File outputFile){
+	public BufferedImage createCompositeImage(File outputFile) {
 		
 		int widthDiff = getWidthDiff();
 		int heightDiff = getHeightDiff();
-		int width = (int)newRect.getWidth();
-		int height = (int)newRect.getHeight();
+		int width = (int) newRect.getWidth();
+		int height = (int) newRect.getHeight();
 		
-		if(getPixelDiffCount() == 0){
+		if (getPixelDiffCount() == 0) {
 			return img1;
 		}
 		
 		BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		
 		Graphics g = newImage.getGraphics();
+		
 		g.setColor(Color.red);
 		g.drawImage(img1, 0, 0, null);
 		g.fillRect(width - widthDiff, 0, widthDiff, Math.min(img1.getHeight(), img2.getHeight()));
 		g.fillRect(0, height - heightDiff, width, height);
 		
-		for(Pixel pixel : pixels){
+		for (Pixel pixel : pixels) {
 			newImage.setRGB(pixel.getX(), pixel.getY(), 16711680);
 		}
 		
@@ -161,9 +161,9 @@ public class ImageComparator {
 	public int getPixelDiffPercent() {
 		
 		int dimension = img1.getHeight() * img1.getWidth();
-		double diff = (double)getPixelDiffCount()/dimension*100;
+		double diff = ((double) getPixelDiffCount() / dimension) * 100;
 		
-		return (int)diff;
+		return (int) diff;
 		
 	}
 			

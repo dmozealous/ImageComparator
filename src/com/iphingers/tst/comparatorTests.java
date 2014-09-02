@@ -16,7 +16,7 @@ import com.iphingers.image.ImageComparator;
 /**
  * The Class comparatorTests.
  */
-public class comparatorTests {
+public class ComparatorTests {
 	
 	/** The baseimage. */
 	private final File BASEIMAGE = new File("Images/IMG_4776.png");
@@ -51,9 +51,6 @@ public class comparatorTests {
 	/** The base image bigger. */
 	private BufferedImage baseImageBigger;
 	
-	/** The img good. */
-	private BufferedImage imgGood;	
-	
 	/** The goodfilecomp. */
 	private File GOODFILECOMP = new File("Images/Good_COMP.png");
 	
@@ -67,7 +64,7 @@ public class comparatorTests {
 	 * Before test.
 	 */
 	@Before
-	public void beforeTest(){
+	public void beforeTest() {
 		
 		try {
 			
@@ -75,7 +72,7 @@ public class comparatorTests {
 			baseImage2 = ImageIO.read(BASEIMAGE2);
 			baseImageTimeDiff = ImageIO.read(BASEIMAGETIMEDIFF);
 			baseImageSame = ImageIO.read(BASEIMAGE);		
-			imgGood = ImageIO.read(GOODFILECOMP);
+			ImageIO.read(GOODFILECOMP);
 			baseImageSmaller = ImageIO.read(BASEIMAGESMALLER);
 			baseImageBigger = ImageIO.read(BASEIMAGEBIGGER);
 			
@@ -119,7 +116,7 @@ public class comparatorTests {
 		ImageComparator comp = new ImageComparator(baseImage, baseImage2);
 		assertEquals(0, comp.getWidthDiff());
 		assertEquals(0, comp.getHeightDiff());
-		assertEquals(31, comp.getPixelDiffPercent(),1);
+		assertEquals(31, comp.getPixelDiffPercent(), 1);
 	}
 	
 	/**
